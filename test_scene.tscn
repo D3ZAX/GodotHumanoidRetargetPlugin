@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://dgkd7tlaq0jan"]
+
+[ext_resource type="PackedScene" uid="uid://b7yy40dbaaf5w" path="res://models/mixamo.glb" id="1_sasra"]
+[ext_resource type="PackedScene" uid="uid://df2jomujca14i" path="res://models/g8m.glb" id="2_coq8p"]
+[ext_resource type="Script" uid="uid://d1lg2smktql02" path="res://addons/humanoid_retarget_plugin/humanoid_retarget_modifier.gd" id="3_2nij2"]
+
+[node name="TestScene" type="Node3D" unique_id=1069876781]
+
+[node name="mixamo" parent="." unique_id=1481251162 instance=ExtResource("1_sasra")]
+
+[node name="GeneralSkeleton" parent="mixamo/Armature" parent_id_path=PackedInt32Array(1481251162, 1381560476) index="0" unique_id=1343335909]
+bones/0/position = Vector3(-0.11292081, 0.8803464, 0.288923)
+bones/0/rotation = Quaternion(0.15528606, 0.013733213, 0.002126923, 0.98777187)
+bones/1/rotation = Quaternion(0.058980033, -0.016620317, 0.06711123, 0.9958621)
+bones/2/rotation = Quaternion(0.03647294, -0.001396215, 0.0065566525, 0.9993122)
+bones/3/rotation = Quaternion(0.03647082, -0.0017271218, 0.006490546, 0.99931216)
+bones/4/rotation = Quaternion(-0.0034591914, 0.00034690823, 9.684591e-05, 0.99999404)
+bones/5/rotation = Quaternion(-0.2647203, 0.017537352, -0.07308165, 0.9613921)
+bones/7/rotation = Quaternion(0.3982159, 0.56513846, 0.60300624, -0.39802778)
+bones/8/rotation = Quaternion(0.2284241, 0.8254523, -0.5132326, 0.055166118)
+bones/9/rotation = Quaternion(0.107883215, -0.6988189, 0.107883185, 0.698838)
+bones/10/rotation = Quaternion(0.043525305, 0.826246, 0.06905114, 0.5573644)
+bones/11/rotation = Quaternion(-0.23740484, 0.7403224, 0.15194935, 0.61030585)
+bones/12/rotation = Quaternion(0.14985189, 0.045340285, 0.009317131, 0.98762435)
+bones/13/rotation = Quaternion(0.013851998, 0.008868634, -0.020772276, 0.9996489)
+bones/14/scale = Vector3(1.0005774, 1.0004867, 1.000152)
+bones/15/rotation = Quaternion(-0.0032530173, 0.0002259319, 0.032127142, 0.99947846)
+bones/16/rotation = Quaternion(0.032482907, -2.5332022e-07, -0.003913947, 0.99946463)
+bones/17/rotation = Quaternion(0.06140335, -8.568166e-07, -0.0074101677, 0.9980856)
+bones/19/rotation = Quaternion(0.030546263, 0.00061212643, -0.02226208, 0.9992852)
+bones/20/rotation = Quaternion(0.071717344, -8.1956534e-07, -0.008654923, 0.99738747)
+bones/21/rotation = Quaternion(0.076277524, -8.4191595e-07, -0.009205209, 0.9970442)
+bones/23/rotation = Quaternion(0.07267992, 0.0065884762, -0.0885232, 0.9933971)
+bones/24/rotation = Quaternion(0.124241844, -1.266601e-06, -0.014985454, 0.9921389)
+bones/25/rotation = Quaternion(0.096216135, -1.7657883e-06, -0.011611346, 0.9952928)
+bones/27/rotation = Quaternion(0.10439089, 0.021390304, -0.1805102, 0.9777838)
+bones/28/rotation = Quaternion(0.16970237, 0.005926443, 0.015291783, 0.98535895)
+bones/29/rotation = Quaternion(0.10886738, -2.547355e-05, -0.013366812, 0.99396646)
+bones/31/rotation = Quaternion(0.4909966, -0.50156176, -0.5337044, -0.47171783)
+bones/32/rotation = Quaternion(-0.2089124, 0.8584516, -0.4656566, 0.050796032)
+bones/33/rotation = Quaternion(0.096347295, 0.7005205, -0.096347295, 0.7005037)
+bones/34/rotation = Quaternion(0.06378856, -0.41485715, -0.10411371, 0.90165675)
+bones/35/rotation = Quaternion(-0.29804093, -0.6945696, -0.0702183, 0.65101004)
+bones/36/rotation = Quaternion(0.12658441, -0.043683704, -0.01705784, 0.99084675)
+bones/37/rotation = Quaternion(-0.0009938328, -0.0014687923, 0.021364747, 0.9997702)
+bones/38/scale = Vector3(1.0005778, 1.0004866, 1.0001523)
+bones/39/rotation = Quaternion(0.10607883, 0.0035963878, -0.022152022, 0.9941045)
+bones/40/rotation = Quaternion(0.09819846, -1.5720836e-06, 0.011962945, 0.99509495)
+bones/41/rotation = Quaternion(-0.013691916, 1.490117e-07, -0.0016685807, 0.99990493)
+bones/43/rotation = Quaternion(0.14584869, 0.0018885881, 0.004822418, 0.9892934)
+bones/44/rotation = Quaternion(0.148886, -1.7210955e-06, 0.018144337, 0.9886879)
+bones/45/rotation = Quaternion(0.03390958, 0.0071125836, 0.004378189, 0.99939)
+bones/47/rotation = Quaternion(0.19973215, -0.0026392413, 0.037164923, 0.97914195)
+bones/48/rotation = Quaternion(0.20921114, -2.5481154e-06, 0.02548838, 0.97753835)
+bones/49/rotation = Quaternion(0.087323576, 0.007896228, 0.011345763, 0.9960842)
+bones/51/rotation = Quaternion(0.25092041, -0.009006426, 0.06466721, 0.9658034)
+bones/52/rotation = Quaternion(0.25154525, -1.6018859e-06, 0.030644985, 0.96736026)
+bones/53/rotation = Quaternion(0.12312792, -8.121146e-07, 0.015015629, 0.99227726)
+bones/55/rotation = Quaternion(0.025716344, 0.23934197, 0.96999025, -0.034250148)
+bones/56/rotation = Quaternion(0.05714246, 0.6661526, -0.742828, -0.03438154)
+bones/57/rotation = Quaternion(-0.15371367, 0.84538627, -0.4824434, 0.17012578)
+bones/58/rotation = Quaternion(4.3798458e-08, 0.99252295, 0.12205856, 3.295142e-10)
+bones/60/rotation = Quaternion(-0.060945664, 0.50010085, 0.8633156, -0.029513985)
+bones/61/rotation = Quaternion(0.002332031, 0.89289623, -0.44885474, 0.035503324)
+bones/62/rotation = Quaternion(-0.022799762, 0.63536704, -0.7714257, 0.026296401)
+bones/63/rotation = Quaternion(-9.603787e-10, 1, 9.908294e-05, 2.606735e-09)
+
+[node name="g8m" parent="." unique_id=1751731111 instance=ExtResource("2_coq8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9156731, 0, 0)
+
+[node name="GeneralSkeleton" parent="g8m/Genesis8Male" parent_id_path=PackedInt32Array(1751731111, 1617429122) index="0" unique_id=929893338]
+bones/0/position = Vector3(0, 1.0585513, 0.019151151)
+bones/2/rotation = Quaternion(0.00077841396, 0.025358908, 0.99698573, 0.07331947)
+bones/4/rotation = Quaternion(0.0072064637, 0.9997753, -0.019623298, 0.0035189535)
+bones/18/rotation = Quaternion(-0.0007759168, 0.025375118, 0.9969853, -0.07331954)
+bones/20/rotation = Quaternion(-0.007206331, 0.99977463, -0.019655645, -0.0035240303)
+bones/38/rotation = Quaternion(-0.5150622, -0.47659853, -0.45923564, 0.54467195)
+bones/39/rotation = Quaternion(0.02890875, 0.9205378, 0.38640606, 0.049646392)
+bones/41/rotation = Quaternion(-0.030168258, -0.64461166, -0.07093131, 0.7606145)
+bones/43/rotation = Quaternion(0.035504613, 0.68731815, 0.011130041, 0.72540283)
+bones/48/rotation = Quaternion(-0.06391995, 0.0032278576, -0.018780723, 0.99777305)
+bones/49/rotation = Quaternion(-0.012985185, -0.024312997, 0.01669347, 0.99948066)
+bones/52/rotation = Quaternion(-0.03967186, -0.030265052, 0.022906357, 0.9984916)
+bones/53/rotation = Quaternion(-0.06278378, 0.0065149185, -0.01333491, 0.9979168)
+bones/56/rotation = Quaternion(-0.062892094, -0.0647278, 0.054252002, 0.9944404)
+bones/57/rotation = Quaternion(-0.010020671, 0.003944483, -0.003185928, 0.99993694)
+bones/60/rotation = Quaternion(-0.05400664, -0.07995443, 0.07266543, 0.99267834)
+bones/61/rotation = Quaternion(-0.009416333, -0.0069566085, 0.0066684363, 0.9999092)
+bones/63/rotation = Quaternion(-0.515111, 0.4765591, 0.4592787, 0.54462385)
+bones/64/rotation = Quaternion(-0.028908111, 0.92053753, 0.3864069, -0.04964572)
+bones/66/rotation = Quaternion(-0.030168856, 0.6446117, 0.07093079, 0.7606145)
+bones/68/rotation = Quaternion(0.035504926, -0.6873181, -0.01112998, 0.7254029)
+bones/73/rotation = Quaternion(-0.06391966, -0.0032279918, 0.018780863, 0.9977731)
+bones/74/rotation = Quaternion(-0.012983647, 0.02431289, -0.016693836, 0.99948066)
+bones/77/rotation = Quaternion(-0.03967253, 0.030265264, -0.022906262, 0.9984915)
+bones/78/rotation = Quaternion(-0.06278795, -0.006514789, 0.013335307, 0.9979165)
+bones/81/rotation = Quaternion(-0.0628886, 0.06472781, -0.054252084, 0.9944406)
+bones/82/rotation = Quaternion(-0.010023049, -0.003944044, 0.003185583, 0.99993694)
+bones/85/rotation = Quaternion(-0.054019727, 0.07985014, -0.07257611, 0.9926926)
+bones/86/rotation = Quaternion(-0.009395751, 0.007232266, -0.00689483, 0.99990594)
+
+[node name="HumanoidRetargetModifier" type="SkeletonModifier3D" parent="g8m/Genesis8Male/GeneralSkeleton" index="1" unique_id=324506807 node_paths=PackedStringArray("source_skeleton")]
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 0
+rotation_order = 2
+top_level = false
+visible = true
+visibility_parent = NodePath("")
+active = true
+influence = 1.0
+script = ExtResource("3_2nij2")
+source_skeleton = NodePath("../../../../mixamo/Armature/GeneralSkeleton")
+metadata/_custom_type_script = "uid://d1lg2smktql02"
+
+[editable path="mixamo"]
+[editable path="g8m"]
