@@ -15,17 +15,23 @@ var _source_skeleton: Skeleton3D
 # Target skeleton reference
 var target_skeleton: Skeleton3D
 
-# Bone chains used for directional alignment
+# Body chains for directional alignment
 var body_chains := [
 	["LeftShoulder", "LeftUpperArm", "LeftLowerArm", "LeftHand"],
 	["RightShoulder", "RightUpperArm", "RightLowerArm", "RightHand"],
 
 	["LeftUpperLeg", "LeftLowerLeg", "LeftFoot"],
 	["RightUpperLeg", "RightLowerLeg", "RightFoot"],
+]
 
-	["LeftHand", "LeftMiddleProximal"],
-	["RightHand", "RightMiddleProximal"],
+# Hand chains (4‑point orientation alignment)
+var hand_chains := [
+	["LeftHand", "LeftMiddleProximal", "LeftIndexProximal", "LeftRingProximal"],
+	["RightHand", "RightMiddleProximal", "RightIndexProximal", "RightRingProximal"],
+]
 
+# Finger chains
+var finger_chains := [
 	["LeftThumbProximal",  "LeftThumbIntermediate",  "LeftThumbDistal"],
 	["LeftIndexProximal",  "LeftIndexIntermediate",  "LeftIndexDistal"],
 	["LeftMiddleProximal", "LeftMiddleIntermediate", "LeftMiddleDistal"],
@@ -79,7 +85,7 @@ func _process_modification_with_delta(delta: float) -> void:
 
 
 # ---------------------------------------------------------
-# Reset target skeleton to rest pose and align with source
+# Reset target skeleton and align rest pose
 # ---------------------------------------------------------
 func align_rest():
 	if _source_skeleton == null or target_skeleton == null:
@@ -101,16 +107,29 @@ func align_bones():
 	for chain in body_chains:
 		align_chain(chain)
 
+	for chain in hand_chains:
+		align_hand_chain(chain)
+
+	for chain in finger_chains:
+		align_chain(chain)
+
 	align_hip_position()
 
 
-# Align a chain of bones
+# Align a chain of bones (pairwise)
 func align_chain(chain: Array):
 	for i in chain.size() - 1:
 		align_bone_direction(chain[i], chain[i + 1])
 
 
-# Align direction of bone A → bone B
+# Align a 4‑point hand chain (A‑B‑C‑D)
+func align_hand_chain(chain: Array):
+	align_bone_direction_4(chain[0], chain[1], chain[2], chain[3])
+
+
+# ---------------------------------------------------------
+# 2‑point directional alignment
+# ---------------------------------------------------------
 func align_bone_direction(bone_a: String, bone_b: String):
 	var src_a = _source_skeleton.find_bone(bone_a)
 	var src_b = _source_skeleton.find_bone(bone_b)
@@ -133,6 +152,75 @@ func align_bone_direction(bone_a: String, bone_b: String):
 
 	var q_dir = Quaternion(dst_dir, src_dir)
 	var target_global_basis = Basis(q_dir) * dst_a_pose.basis
+
+	var parent = target_skeleton.get_bone_parent(dst_a)
+	var local_rot: Quaternion
+
+	if parent == -1:
+		local_rot = target_global_basis.get_rotation_quaternion()
+	else:
+		var parent_global = target_skeleton.get_bone_global_pose(parent)
+		var local_basis = parent_global.basis.inverse() * target_global_basis
+		local_rot = local_basis.get_rotation_quaternion()
+
+	target_skeleton.set_bone_pose_rotation(dst_a, local_rot)
+
+
+# ---------------------------------------------------------
+# 4‑point orientation alignment (hand)
+# ---------------------------------------------------------
+func align_bone_direction_4(bone_a: String, bone_b: String, bone_c: String, bone_d: String):
+	var src_a = _source_skeleton.find_bone(bone_a)
+	var src_b = _source_skeleton.find_bone(bone_b)
+	var src_c = _source_skeleton.find_bone(bone_c)
+	var src_d = _source_skeleton.find_bone(bone_d)
+
+	var dst_a = target_skeleton.find_bone(bone_a)
+	var dst_b = target_skeleton.find_bone(bone_b)
+	var dst_c = target_skeleton.find_bone(bone_c)
+	var dst_d = target_skeleton.find_bone(bone_d)
+
+	if src_a == -1 or src_b == -1 or src_c == -1 or src_d == -1:
+		return
+	if dst_a == -1 or dst_b == -1 or dst_c == -1 or dst_d == -1:
+		return
+
+	# --- Source basis ---
+	var src_a_pos = _source_skeleton.get_bone_global_rest(src_a).origin
+	var src_b_pos = _source_skeleton.get_bone_global_rest(src_b).origin
+	var src_c_pos = _source_skeleton.get_bone_global_rest(src_c).origin
+	var src_d_pos = _source_skeleton.get_bone_global_rest(src_d).origin
+
+	var src_ab = (src_b_pos - src_a_pos).normalized()
+	var src_ac = (src_c_pos - src_a_pos).normalized()
+
+	var src_x = src_ab
+	var src_z = src_ab.cross(src_ac).normalized()
+	var src_y = src_z.cross(src_x).normalized()
+
+	var src_basis = Basis(src_x, src_y, src_z)
+
+	# --- Destination basis ---
+	var dst_a_pos = target_skeleton.get_bone_global_pose(dst_a).origin
+	var dst_b_pos = target_skeleton.get_bone_global_pose(dst_b).origin
+	var dst_c_pos = target_skeleton.get_bone_global_pose(dst_c).origin
+	var dst_d_pos = target_skeleton.get_bone_global_pose(dst_d).origin
+
+	var dst_ab = (dst_b_pos - dst_a_pos).normalized()
+	var dst_ac = (dst_c_pos - dst_a_pos).normalized()
+
+	var dst_x = dst_ab
+	var dst_z = dst_ab.cross(dst_ac).normalized()
+	var dst_y = dst_z.cross(dst_x).normalized()
+
+	var dst_basis = Basis(dst_x, dst_y, dst_z)
+
+	# Rotation from dst → src
+	var rot_basis = src_basis * dst_basis.inverse()
+
+	# Apply to bone A
+	var dst_a_pose = target_skeleton.get_bone_global_pose(dst_a)
+	var target_global_basis = rot_basis * dst_a_pose.basis
 
 	var parent = target_skeleton.get_bone_parent(dst_a)
 	var local_rot: Quaternion
@@ -204,7 +292,7 @@ func compute_hip_height_offset() -> float:
 
 
 # ---------------------------------------------------------
-# Record rest → pose rotation offsets for humanoid bones
+# Record rest → pose rotation offsets
 # ---------------------------------------------------------
 func record_humanoid_offsets():
 	_bone_rotation_offset.clear()
@@ -222,7 +310,7 @@ func record_humanoid_offsets():
 
 
 # ---------------------------------------------------------
-# Apply animation from source skeleton to target skeleton
+# Apply animation from source skeleton
 # ---------------------------------------------------------
 func sync_from_source():
 	if _source_skeleton == null or target_skeleton == null:
